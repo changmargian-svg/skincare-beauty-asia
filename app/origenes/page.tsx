@@ -1,64 +1,22 @@
-export const dynamic = 'force-dynamic';
-
-// Server Component que consume una API Externa con fetch + async/await
 async function obtenerPaisesCosmetica() {
+  const codigos = ['kr', 'fr', 'us', 'jp'];
+  
   try {
-    // Usamos el endpoint /v3.1/all y filtramos los países para evitar fallos de ruta en la API
-    const res = await fetch('https://restcountries.com/v3.1/all?fields=cca2,name,flags,region,capital', {
-      cache: 'no-store'
-    });
-    
-    if (!res.ok) throw new Error('Error al consultar la API externa');
-    
-    const data = await res.json();
-    if (!Array.isArray(data)) return [];
+    const respuestas = await Promise.all(
+      codigos.map((code) =>
+        fetch(`https://restcountries.com/v3.1/alpha/${code}`, {
+          cache: 'no-store',
+        }).then((res) => (res.ok ? res.json() : null))
+      )
+    );
 
-    // Codigos de paises a mostrar: Corea del Sur (KR), Francia (FR), EE.UU. (US), Japón (JP)
-    const codigosDeseados = ['KR', 'FR', 'US', 'JP'];
-    return data.filter((pais: any) => codigosDeseados.includes(pais.cca2));
+    const listaPaises = respuestas
+      .filter((res) => res && res.length > 0)
+      .map((res) => res[0]);
+
+    return listaPaises;
   } catch (error) {
-    console.error(error);
+    console.error('Error al obtener países:', error);
     return [];
   }
-}
-
-export default async function OrigenesPage() {
-  const paises = await obtenerPaisesCosmetica();
-
-  return (
-    <div className="min-h-screen bg-gray-50 text-gray-800 p-6">
-      <header className="max-w-4xl mx-auto mb-8 flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-pink-600">SKinCare Beauty & Asia</h1>
-        <a href="/" className="text-sm bg-gray-200 px-3 py-1 rounded hover:bg-gray-300">← Volver al inicio</a>
-      </header>
-
-      <main className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow">
-        <h2 className="text-xl font-bold mb-2">Países de Origen de Nuestros Productos</h2>
-        <p className="text-sm text-gray-600 mb-6">
-          Información obtenida en tiempo real mediante consumo de la API REST externa (REST Countries API).
-        </p>
-
-        {(!Array.isArray(paises) || paises.length === 0) ? (
-          <p className="text-red-500">No se pudieron cargar los datos de la API externa.</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {paises.map((pais: any) => (
-              <div key={pais.cca2 || pais.name?.common} className="border p-4 rounded-md flex items-center space-x-4 bg-pink-50">
-                <img 
-                  src={pais.flags?.svg || pais.flags?.png} 
-                  alt={pais.name?.common || 'Bandera'} 
-                  className="w-12 h-8 object-cover rounded"
-                />
-                <div>
-                  <h3 className="font-bold">{pais.name?.common}</h3>
-                  <p className="text-xs text-gray-600">Región: {pais.region}</p>
-                  <p className="text-xs text-gray-500">Capital: {pais.capital?.[0]}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </main>
-    </div>
-  );
 }
