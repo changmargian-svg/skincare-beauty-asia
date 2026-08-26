@@ -12,6 +12,7 @@ export default function Home() {
       <header className="bg-pink-600 text-white p-4 shadow-md flex justify-between items-center">
         <h1 className="text-2xl font-bold tracking-wide">SKinCare Beauty & Asia</h1>
         <nav className="space-x-4">
+          <a href="/origenes" className="hover:underline font-medium">Orígenes (API)</a>
           <a href="/login" className="hover:underline">Iniciar Sesión</a>
           <a href="/register" className="bg-white text-pink-600 px-3 py-1 rounded font-semibold hover:bg-gray-100">Registrarse</a>
         </nav>
