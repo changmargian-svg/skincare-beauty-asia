@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 // Server Component que consume una API Externa con fetch + async/await
 async function obtenerPaisesCosmetica() {
   try {
