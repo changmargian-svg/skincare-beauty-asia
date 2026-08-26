@@ -3,14 +3,19 @@ export const dynamic = 'force-dynamic';
 // Server Component que consume una API Externa con fetch + async/await
 async function obtenerPaisesCosmetica() {
   try {
-    const res = await fetch('https://restcountries.com/v3.1/alpha?codes=kr,fr,us,jp', {
+    // Usamos el endpoint /v3.1/all y filtramos los países para evitar fallos de ruta en la API
+    const res = await fetch('https://restcountries.com/v3.1/all?fields=cca2,name,flags,region,capital', {
       cache: 'no-store'
     });
+    
     if (!res.ok) throw new Error('Error al consultar la API externa');
     
     const data = await res.json();
-    // Validar que realmente sea un arreglo para evitar el TypeError
-    return Array.isArray(data) ? data : [];
+    if (!Array.isArray(data)) return [];
+
+    // Codigos de paises a mostrar: Corea del Sur (KR), Francia (FR), EE.UU. (US), Japón (JP)
+    const codigosDeseados = ['KR', 'FR', 'US', 'JP'];
+    return data.filter((pais: any) => codigosDeseados.includes(pais.cca2));
   } catch (error) {
     console.error(error);
     return [];
