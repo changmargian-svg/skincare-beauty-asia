@@ -63,7 +63,7 @@ export default function DashboardPage() {
             required 
             value={nombre} 
             onChange={(e) => setNombre(e.target.value)} 
-            className="border p-2 rounded" 
+            className="border p-2 rounded text-gray-900 bg-white placeholder-gray-400" 
           />
           <input 
             type="text" 
@@ -71,7 +71,7 @@ export default function DashboardPage() {
             required 
             value={marca} 
             onChange={(e) => setMarca(e.target.value)} 
-            className="border p-2 rounded" 
+            className="border p-2 rounded text-gray-900 bg-white placeholder-gray-400" 
           />
           <input 
             type="number" 
@@ -80,7 +80,7 @@ export default function DashboardPage() {
             required 
             value={precio} 
             onChange={(e) => setPrecio(e.target.value)} 
-            className="border p-2 rounded" 
+            className="border p-2 rounded text-gray-900 bg-white placeholder-gray-400" 
           />
           <button type="submit" className="bg-pink-600 text-white font-bold p-2 rounded hover:bg-pink-700">
             + Agregar
@@ -88,11 +88,11 @@ export default function DashboardPage() {
         </form>
 
         {/* Tabla CRUD */}
-        <h2 className="text-xl font-bold mb-4">Inventario de Productos</h2>
-        {loading ? <p>Cargando productos...</p> : (
-          <table className="w-full border-collapse border">
+        <h2 className="text-xl font-bold mb-4 text-gray-800">Inventario de Productos</h2>
+        {loading ? <p className="text-gray-600">Cargando productos...</p> : (
+          <table className="w-full border-collapse border bg-white">
             <thead>
-              <tr className="bg-gray-200 text-left">
+              <tr className="bg-gray-200 text-left text-gray-800 font-bold">
                 <th className="p-2 border">Nombre</th>
                 <th className="p-2 border">Marca</th>
                 <th className="p-2 border">Precio</th>
@@ -101,7 +101,7 @@ export default function DashboardPage() {
             </thead>
             <tbody>
               {productos.map((prod) => (
-                <tr key={prod.id} className="border-b">
+                <tr key={prod.id} className="border-b text-gray-800">
                   <td className="p-2 border">{prod.nombre}</td>
                   <td className="p-2 border">{prod.marca}</td>
                   <td className="p-2 border">${prod.precio}</td>
