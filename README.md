@@ -3,9 +3,10 @@
 Aplicación Web Full-Stack e-commerce especializada en productos para el cuidado de la piel, cosmética coreana e internacional, incluyendo protectores solares, retinoles, jabones anti-acné y perfumería.
 
 **Demo en vivo:** https://skincare-beauty-asia-9mzo.vercel.app[cite: 1]  
-**Video de Defensa:** [Pega aquí el enlace de YouTube / Google Drive una vez grabado][cite: 1]
+**Video de Defensa:** https://go.screenpal.com/watch/cOjteFnw1g4
+https://go.screenpal.com/watch/cOjteBnw1Ck https://go.screenpal.com/watch/cOjteMnw1Gh  https://go.screenpal.com/watch/cOjtfynw1dl https://go.screenpal.com/watch/cOjtfknw1dP
 
----![alt text](image.png)
+---![Catálogo de Productos](image.png)  ![Origen de Marcas API](image-1.png)
 
 ## 🛠️ Stack Tecnológico
 - **Framework:** Next.js 14 (App Router)[cite: 1]
