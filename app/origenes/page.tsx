@@ -51,7 +51,7 @@ async function obtenerPaisesCosmetica(): Promise<Pais[]> {
     if (!res.ok) return paisesFallback;
     const data = await res.json();
     return Array.isArray(data) && data.length > 0 ? data : paisesFallback;
-  } catch (error) {
+  } catch {
     return paisesFallback;
   }
 }
@@ -84,6 +84,7 @@ export default async function OrigenesPage() {
               key={pais.cca2}
               className="border border-pink-100 rounded-lg p-4 flex flex-col items-center bg-pink-50/30 text-center"
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={pais.flags.png || pais.flags.svg}
                 alt={pais.name.common}

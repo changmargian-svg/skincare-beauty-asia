@@ -3,6 +3,9 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { esAdmin } from '@/lib/seguridad'
 
+// Forzar renderizado dinámico en el servidor (evita errores en el build de Vercel)
+export const dynamic = 'force-dynamic'
+
 export default async function DashboardPage() {
   const cookieStore = await cookies()
 
