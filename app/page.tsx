@@ -1,6 +1,8 @@
+import Link from 'next/link';
+
 export default function Home() {
   const productosEjemplo = [
-    { id: 1, nombre: 'Anthelios UVmune 400', marca: "La Roche-Posay", precio: 28.50, categoria: 'Protección Solar' },
+    { id: 1, nombre: 'Anthelios UVmune 400', marca: 'La Roche-Posay', precio: 28.50, categoria: 'Protección Solar' },
     { id: 2, nombre: 'Oil Control Sun Gel-Creme', marca: 'Eucerin', precio: 26.00, categoria: 'Protección Solar' },
     { id: 3, nombre: 'Centella Ampoule', marca: 'SKIN1004', precio: 22.00, categoria: 'Cuidado Facial' },
     { id: 4, nombre: 'Retinol 0.2% in Squalane', marca: 'The Ordinary', precio: 18.00, categoria: 'Cuidado Facial' }
@@ -12,9 +14,9 @@ export default function Home() {
       <header className="bg-pink-600 text-white p-4 shadow-md flex justify-between items-center">
         <h1 className="text-2xl font-bold tracking-wide">SKinCare Beauty & Asia</h1>
         <nav className="space-x-4">
-          <a href="/origenes" className="hover:underline font-medium">Orígenes (API)</a>
-          <a href="/login" className="hover:underline">Iniciar Sesión</a>
-          <a href="/register" className="bg-white text-pink-600 px-3 py-1 rounded font-semibold hover:bg-gray-100">Registrarse</a>
+          <Link href="/origenes" className="hover:underline font-medium">Orígenes (API)</Link>
+          <Link href="/login" className="hover:underline">Iniciar Sesión</Link>
+          <Link href="/register" className="bg-white text-pink-600 px-3 py-1 rounded font-semibold hover:bg-gray-100">Registrarse</Link>
         </nav>
       </header>
 
@@ -37,7 +39,12 @@ export default function Home() {
               </div>
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-lg font-extrabold text-gray-900">${prod.precio.toFixed(2)}</span>
-                <button className="bg-pink-600 text-white px-3 py-1 text-sm rounded hover:bg-pink-700">Ver Detalle</button>
+                <Link 
+                  href={`/productos/${prod.id}`} 
+                  className="bg-pink-600 text-white px-3 py-1 text-sm rounded hover:bg-pink-700 font-medium transition-colors"
+                >
+                  Ver Detalle
+                </Link>
               </div>
             </div>
           ))}
