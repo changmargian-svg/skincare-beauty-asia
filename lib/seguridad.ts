@@ -18,9 +18,10 @@ export async function esAdmin(userId: string): Promise<boolean> {
     }
   )
 
+  // Cambiado a 'profiles' y 'role' para mantener consistencia con Auth/Login
   const { data, error } = await supabase
-    .from('perfiles')
-    .select('rol')
+    .from('profiles')
+    .select('role')
     .eq('id', userId)
     .single()
 
@@ -28,5 +29,5 @@ export async function esAdmin(userId: string): Promise<boolean> {
     return false
   }
 
-  return data.rol === 'admin'
+  return data.role === 'admin'
 }
