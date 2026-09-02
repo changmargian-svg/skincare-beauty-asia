@@ -1,40 +1,49 @@
 'use client';
 import { useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setLoading(true);
 
-    const { error: loginError } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { data, error: loginError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (loginError) {
-      setError(loginError.message);
+      if (loginError) {
+        setError(loginError.message);
+        setLoading(false);
+        return;
+      }
+
+      if (data?.session) {
+        // Redirección directa para asegurar la navegación inmediata
+        window.location.href = '/dashboard';
+      }
+    } catch (err) {
+      setError('Ocurrió un error inesperado al iniciar sesión.');
       setLoading(false);
-      return;
     }
-
-    router.push('/dashboard');
-    router.refresh();
   };
 
   return (
     <div className="min-h-screen bg-pink-50 flex items-center justify-center p-4">
       <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full">
         <h2 className="text-2xl font-bold text-pink-600 mb-6 text-center">Iniciar Sesión</h2>
-        {error && <p className="text-red-500 text-sm mb-4 bg-red-50 p-2 rounded border border-red-200">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm mb-4 bg-red-50 p-2 rounded border border-red-200">
+            {error}
+          </p>
+        )}
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Correo Electrónico</label>
