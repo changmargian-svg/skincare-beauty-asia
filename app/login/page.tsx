@@ -20,16 +20,17 @@ export default function LoginPage() {
       });
 
       if (loginError) {
+        alert(`Error de autenticación: ${loginError.message}`);
         setError(loginError.message);
         setLoading(false);
         return;
       }
 
       if (data?.session) {
-        // Redirección directa para asegurar la navegación inmediata
         window.location.href = '/dashboard';
       }
-    } catch (err) {
+    } catch (err: any) {
+      alert(`Error inesperado: ${err?.message || 'Consulta no ejecutada'}`);
       setError('Ocurrió un error inesperado al iniciar sesión.');
       setLoading(false);
     }
