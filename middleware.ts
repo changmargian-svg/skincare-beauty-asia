@@ -25,6 +25,16 @@ export async function middleware(req: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
   const esRutaDashboard = req.nextUrl.pathname.startsWith('/dashboard')
+  const esRutaFavoritos = req.nextUrl.pathname.startsWith('/favoritos')
+
+  // Rutas que solo requieren sesión activa (cualquier rol autenticado)
+  if (esRutaFavoritos) {
+    if (!user) {
+      const loginUrl = req.nextUrl.clone()
+      loginUrl.pathname = '/login'
+      return NextResponse.redirect(loginUrl)
+    }
+  }
 
   if (esRutaDashboard) {
     // 1. Si no hay usuario autenticado, redirige a /login
