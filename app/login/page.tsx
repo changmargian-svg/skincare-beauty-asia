@@ -46,7 +46,7 @@ export default function LoginPage() {
         
         router.refresh(); // Actualiza el estado de las cookies en el cliente
       }
-    } catch (err: any) {
+    } catch {
       setError('Ocurrió un error inesperado al iniciar sesión.');
       setLoading(false);
     }

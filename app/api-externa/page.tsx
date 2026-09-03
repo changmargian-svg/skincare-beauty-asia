@@ -24,7 +24,7 @@ export default async function ApiExternaPage() {
 
     const data = await res.json();
     country = data[0];
-  } catch (err) {
+  } catch {
     errorMsg = 'No se pudo cargar la información de la API externa.';
   }
 
