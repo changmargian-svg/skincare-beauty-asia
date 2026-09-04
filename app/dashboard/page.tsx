@@ -1,10 +1,19 @@
 import Link from 'next/link';
-import { obtenerProductos } from '@/lib/supabase-server';
+import { redirect } from 'next/navigation';
+import { getUsuarioActual, obtenerProductos } from '@/lib/supabase-server';
+import { esAdmin } from '@/lib/seguridad';
 import EliminarProductoForm from './EliminarProductoForm';
 
 export const dynamic = 'force-dynamic';
 
 export default async function DashboardPage() {
+  // Protección propia de la página: verifica sesión y rol admin
+  const { user } = await getUsuarioActual();
+  if (!user) redirect('/login');
+
+  const esAdministrador = await esAdmin(user.id);
+  if (!esAdministrador) redirect('/');
+
   const productos = await obtenerProductos();
 
   return (

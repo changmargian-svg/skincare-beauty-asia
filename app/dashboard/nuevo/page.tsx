@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { getUsuarioActual, obtenerEsAdmin } from '@/lib/supabase-server';
+import { getUsuarioActual } from '@/lib/supabase-server';
+import { esAdmin } from '@/lib/seguridad';
 import { agregarProductoServerAction } from '@/app/actions';
 
 export const dynamic = 'force-dynamic';
@@ -9,7 +10,7 @@ export default async function NuevoProductoPage() {
   const { user } = await getUsuarioActual();
   if (!user) redirect('/login');
 
-  const esAdministrador = await obtenerEsAdmin(user.id);
+  const esAdministrador = await esAdmin(user.id);
   if (!esAdministrador) redirect('/');
 
   return (

@@ -52,7 +52,8 @@ export async function middleware(req: NextRequest) {
       .single()
 
     // 3. Si no es admin, no lo deja pasar y lo manda al inicio /
-    if (!profile || profile.role !== 'admin') {
+    const esAdministrador = profile?.role === 'admin'
+    if (!esAdministrador) {
       const homeUrl = req.nextUrl.clone()
       homeUrl.pathname = '/'
       return NextResponse.redirect(homeUrl)

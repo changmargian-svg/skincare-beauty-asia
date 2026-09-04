@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { obtenerEsAdmin, getUsuarioActual } from '@/lib/supabase-server';
+import { getUsuarioActual } from '@/lib/supabase-server';
+import { esAdmin } from '@/lib/seguridad';
 import LogoutButton from '@/app/components/LogoutButton';
 
 export const dynamic = 'force-dynamic';
@@ -12,11 +13,13 @@ export default async function DashboardLayout({
 }) {
   const { user, supabase } = await getUsuarioActual();
 
+  // Verificación de sesión en el servidor
   if (!user) {
     redirect('/login');
   }
 
-  const esAdministrador = await obtenerEsAdmin(user.id);
+  // Verificación de rol administrador usando lib/seguridad.ts
+  const esAdministrador = await esAdmin(user.id);
 
   if (!esAdministrador) {
     redirect('/');
