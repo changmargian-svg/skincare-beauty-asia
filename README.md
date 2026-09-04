@@ -2,8 +2,8 @@
 
 Aplicación Web Full-Stack **e-commerce** especializada en productos para el cuidado de la piel y cosmética coreana (K-Beauty): protectores solares, retinoles, jabones anti-acné y perfumería. Un **proyecto integrador** que aplica todo el stack Full-Stack aprendido: Next.js, Supabase, autenticación con roles, Server Actions y despliegue en producción.
 
-> 🔗 **Demo en vivo:** https://skincare-beauty-asia.vercel.app *(completa con tu URL de Vercel)*
-> 🎬 **Video de defensa:** *(pega aquí el enlace de YouTube / Google Drive antes de entregar)*
+> 🔗 **Demo en vivo:** https://skincare-beauty-asia.vercel.app
+> 🎬 **Video de defensa (YouTube / Google Drive):** *(pega aquí el enlace antes de entregar)*
 
 ---
 
@@ -118,6 +118,25 @@ Obtén estos valores en: **Supabase Dashboard → Project Settings → API**. Nu
 
 ---
 
+## Demostración técnica (para el video de defensa)
+
+### 1. Arquitectura Full-Stack
+El proyecto separa correctamente **Server Components** (renderizan en el servidor: la home, el catálogo y el dashboard leen la base de datos) de **Client Components** (interactivos: el buscador con `useState`, el botón de favoritos y el cierre de sesión). La regla `'use client'` solo se usa donde hay estado o eventos.
+
+### 2. Consumo de API externa (REST Countries)
+En `app/origenes/page.tsx` se consume `https://restcountries.com` con **`fetch` + `async/await`** desde un **Server Component**, con caché (`next: { revalidate: 3600 }`) y un **manejo de errores** con datos de respaldo (`fallback`) si la API falla. Se muestran banderas, región y capital de los países de origen de la cosmética.
+
+### 3. Base de datos y Seguridad (RLS)
+Supabase almacena el contenido generado por los usuarios (productos y favoritos). Hay **3 tablas relacionadas** (`profiles`, `productos`, `favoritos`) con **llaves foráneas** y **Row Level Security** activado en todas. Las políticas garantizan que: los visitantes solo **leen** el catálogo, solo el **admin** puede crear/editar/eliminar productos, y cada usuario solo ve sus **propios** favoritos.
+
+### 4. Autenticación con roles
+El **registro** crea la cuenta y el perfil con su rol (vía trigger `handle_new_user`). El **login** consulta el `role` en `profiles` y redirige: admin → `/dashboard`, cliente → `/`. El **middleware** protege las rutas privadas de forma doble (nivel red y nivel servidor). El rol **no está hardcodeado**, se guarda en la base de datos.
+
+### 5. CRUD completo con Server Actions
+Las mutaciones (`app/actions.ts`) usan **Server Actions**: `agregarProductoServerAction` (crear), `actualizarProductoServerAction` (editar) y `eliminarProductoServerAction` (borrar). Cada una valida la autenticación y el rol admin antes de tocar la base de datos.
+
+---
+
 ## Funcionalidades (checklist de requisitos)
 
 ✅ Sistema con **2 roles** (admin / cliente) con permisos distintos
@@ -143,13 +162,13 @@ skincare-beauty-asia/
 │   ├── layout.tsx              # Layout global
 │   ├── page.tsx                # Home (pública, lee productos de Supabase)
 │   ├── productos/
-│   │   ├── page.tsx            # Catálogo (público + buscador)
-│   │   └── [id]/page.tsx       # Detalle (ruta dinámica)
-│   ├── favoritos/page.tsx      # Favoritos del usuario (privada)
-│   ├── origen/
+│   │   ├── page.tsx            # Catálogo completo (público + buscador)
+│   │   └── [id]/page.tsx       # Detalle del producto (ruta dinámica)
+│   ├── favoritos/page.tsx      # Favoritos del usuario (privada, sesión)
+│   ├── origenes/page.tsx       # Países de origen (API externa)
 │   ├── dashboard/
 │   │   ├── layout.tsx          # Layout protegido (solo admin)
-│   │   ├── page.tsx            # Panel CRUD (listar)
+│   │   ├── page.tsx            # Panel CRUD (listar productos)
 │   │   ├── nuevo/page.tsx      # Crear producto
 │   │   └── [id]/editar/page.tsx# Editar producto
 │   ├── login/page.tsx          # Login
