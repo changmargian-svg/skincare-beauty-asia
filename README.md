@@ -4,6 +4,9 @@ Aplicación Web Full-Stack **e-commerce** especializada en productos para el cui
 
 > 🔗 **Demo en vivo:** https://skincare-beauty-asia.vercel.app
 > 🎬 **Video de defensa:** [Ver video (Google Drive)](https://drive.google.com/file/d/1IHMqUzxI05aF0-dx27lAQCOjS_E5LIrI/view?usp=sharing)
+> 📦 **Repositorio:** [GitHub - skincare-beauty-asia](https://github.com/changmargian-svg/skincare-beauty-asia)
+
+https://github.com/changmargian-svg/skincare-beauty-asia#readme
 
 ---
 
