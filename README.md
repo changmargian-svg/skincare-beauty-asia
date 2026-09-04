@@ -3,7 +3,7 @@
 Aplicación Web Full-Stack **e-commerce** especializada en productos para el cuidado de la piel y cosmética coreana (K-Beauty): protectores solares, retinoles, jabones anti-acné y perfumería. Un **proyecto integrador** que aplica todo el stack Full-Stack aprendido: Next.js, Supabase, autenticación con roles, Server Actions y despliegue en producción.
 
 > 🔗 **Demo en vivo:** https://skincare-beauty-asia.vercel.app
-> 🎬 **Video de defensa (YouTube / Google Drive):** *(pega aquí el enlace antes de entregar)*
+> 🎬 **Video de defensa:** [Ver video (Google Drive)](https://drive.google.com/file/d/1IHMqUzxI05aF0-dx27lAQCOjS_E5LIrI/view?usp=sharing)
 
 ---
 
